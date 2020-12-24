@@ -1,0 +1,14 @@
+.settings__menu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 0.7rem;
+}
+
+.settings__menuText {
+  margin-top: 0.7rem;
+}
+
+.last-menuText {
+  margin-bottom: 0.7rem;
+}
