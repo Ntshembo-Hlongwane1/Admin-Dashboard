@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const cors_1 = __importDefault(require("cors"));
+const MembersRoute_1 = __importDefault(require("./Routes/MembersRoute"));
 dotenv_1.default.config();
 const origin = {
     dev: "http://localhost:3000",
@@ -32,6 +33,7 @@ mongoose_1.default.connect(mongoURI, connectionOptions, (error) => {
     }
     return console.log("Connection MongoDB was successful");
 });
+app.use(MembersRoute_1.default);
 //================================================Server Configs & Connection===========================================
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

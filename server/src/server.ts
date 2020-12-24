@@ -2,6 +2,7 @@ import express, { Application } from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
+import MembersRoute from "./Routes/MembersRoute";
 dotenv.config();
 
 const origin = {
@@ -30,6 +31,8 @@ mongoose.connect(mongoURI, connectionOptions, (error) => {
   }
   return console.log("Connection MongoDB was successful");
 });
+
+app.use(MembersRoute);
 
 //================================================Server Configs & Connection===========================================
 const PORT = process.env.PORT || 5000;
