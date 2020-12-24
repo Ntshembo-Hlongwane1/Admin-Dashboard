@@ -1,0 +1,28 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Backend to Admin Dashboard",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc & node .",
+    "dev": "tsc -w & nodemon ."
+  },
+  "author": "Ntshembo Hlongwane",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "formidable": "^1.2.2",
+    "mongoose": "^5.11.8"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.9",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.9",
+    "@types/formidable": "^1.0.31",
+    "@types/mongoose": "^5.10.3",
+    "nodemon": "^2.0.6"
+  }
+}
