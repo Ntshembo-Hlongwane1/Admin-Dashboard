@@ -1,11 +1,35 @@
 import { memberModel } from "../../Models/Members/Members";
 import { Request, Response } from "express";
+import mongoose from "mongoose";
+import Pusher from "pusher";
+import dotenv from "dotenv";
+dotenv.config();
 
 interface Members {
   AddMonthlyMembers(request: Request, response: Response): Promise<Response>;
   GetMembers(request: Request, response: Response): Promise<Response>;
 }
 
+const pusher = new Pusher({
+  appId: process.env.pusher_appId,
+  key: process.env.pusher_key,
+  secret: process.env.pusher_secret,
+  cluster: process.env.pusher_cluster,
+  useTLS: true,
+});
+
+const db = mongoose.connection;
+db.on("open", () => {
+  const totalUsersCollections = db.collection("membersmodels");
+  const changeStream = totalUsersCollections.watch();
+
+  changeStream.on("change", (change: any) => {
+    const data = change.updateDescription.updatedFields;
+    pusher.trigger("totalusers", "update", {
+      data: data,
+    });
+  });
+});
 class MembersController implements Members {
   async AddMonthlyMembers(request: Request, response: Response) {
     const numberOfMembers = request.params.numberOfMembers;

@@ -8,8 +8,33 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const Members_1 = require("../../Models/Members/Members");
+const mongoose_1 = __importDefault(require("mongoose"));
+const pusher_1 = __importDefault(require("pusher"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+const pusher = new pusher_1.default({
+    appId: process.env.pusher_appId,
+    key: process.env.pusher_key,
+    secret: process.env.pusher_secret,
+    cluster: process.env.pusher_cluster,
+    useTLS: true,
+});
+const db = mongoose_1.default.connection;
+db.on("open", () => {
+    const totalUsersCollections = db.collection("membersmodels");
+    const changeStream = totalUsersCollections.watch();
+    changeStream.on("change", (change) => {
+        const data = change.updateDescription.updatedFields;
+        pusher.trigger("totalusers", "update", {
+            data: data,
+        });
+    });
+});
 class MembersController {
     AddMonthlyMembers(request, response) {
         return __awaiter(this, void 0, void 0, function* () {

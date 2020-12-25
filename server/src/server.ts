@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import MembersRoute from "./Routes/MembersRoute";
+import path from "path";
 dotenv.config();
 
 const origin = {
@@ -11,12 +12,7 @@ const origin = {
 };
 const app: Application = express();
 //====================================================Middleware========================================================
-app.use(
-  cors({
-    origin: process.env.NODE_ENV === "production" ? origin.prod : origin.dev,
-    credentials: true,
-  })
-);
+app.use(cors());
 //=================================================MongoDB Connection===================================================
 const mongoURI = process.env.mongoURI;
 const connectionOptions = {
@@ -31,6 +27,16 @@ mongoose.connect(mongoURI, connectionOptions, (error) => {
   }
   return console.log("Connection MongoDB was successful");
 });
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+
+  app.get("*", (request, response) => {
+    response.sendFile(
+      path.resolve(__dirname, "../client", "build", "index.html")
+    );
+  });
+}
 
 app.use(MembersRoute);
 

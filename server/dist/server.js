@@ -8,6 +8,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const cors_1 = __importDefault(require("cors"));
 const MembersRoute_1 = __importDefault(require("./Routes/MembersRoute"));
+const path_1 = __importDefault(require("path"));
 dotenv_1.default.config();
 const origin = {
     dev: "http://localhost:3000",
@@ -15,10 +16,7 @@ const origin = {
 };
 const app = express_1.default();
 //====================================================Middleware========================================================
-app.use(cors_1.default({
-    origin: process.env.NODE_ENV === "production" ? origin.prod : origin.dev,
-    credentials: true,
-}));
+app.use(cors_1.default());
 //=================================================MongoDB Connection===================================================
 const mongoURI = process.env.mongoURI;
 const connectionOptions = {
@@ -33,6 +31,12 @@ mongoose_1.default.connect(mongoURI, connectionOptions, (error) => {
     }
     return console.log("Connection MongoDB was successful");
 });
+if (process.env.NODE_ENV === "production") {
+    app.use(express_1.default.static("client/build"));
+    app.get("*", (request, response) => {
+        response.sendFile(path_1.default.resolve(__dirname, "../client", "build", "index.html"));
+    });
+}
 app.use(MembersRoute_1.default);
 //================================================Server Configs & Connection===========================================
 const PORT = process.env.PORT || 5000;
