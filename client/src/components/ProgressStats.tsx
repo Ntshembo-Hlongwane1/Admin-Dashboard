@@ -4,7 +4,7 @@ import "../Styles/ProgressStats.css";
 
 interface Props {
   progressHeader: string;
-  statsNumber: number;
+  statsNumber: string;
   percentage: number;
   color: string;
 }

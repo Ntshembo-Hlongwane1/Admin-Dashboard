@@ -12,6 +12,7 @@
     "resolveJsonModule": true,
     "jsx": "react",
     "removeComments": true,
-    "target": "ES5"
+    "target": "ES5",
+    "outDir": "./build/"
   }
 }

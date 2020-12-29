@@ -31,10 +31,12 @@
 .nav-link {
   margin-left: 1rem;
   font-weight: 400;
+  cursor: pointer;
 }
 
 .left-menu-icon {
   font-size: 2rem !important;
+  cursor: pointer;
 }
 
 .top__right {
@@ -44,6 +46,7 @@
 
 .right-nav-link {
   margin-right: 1.2rem;
+  cursor: pointer;
 }
 
 .nav__bottom {
@@ -73,4 +76,20 @@
 
 .bottom-nav-text {
   font-weight: 400;
+  cursor: pointer;
+}
+
+.user__menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.user__menu-link {
+  margin-top: 1.3rem;
+  cursor: pointer;
+  padding: 0.2rem;
+}
+.user__menu-link:hover {
+  background-color: lightgray;
 }

@@ -9,9 +9,33 @@ import { Avatar } from "@material-ui/core";
 import SmsIcon from "@material-ui/icons/Sms";
 import ShowChartIcon from "@material-ui/icons/ShowChart";
 import SettingsIcon from "@material-ui/icons/Settings";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 import "../Styles/Header.css";
+import axios from "axios";
+import ProfileImage from "../Assets/profilePic.jpg";
 
 export const Header = () => {
+  const addMember = () => {
+    const numberOfMembers = Math.floor(Math.random() * 100) + 1;
+
+    const baseURL = {
+      dev: `http://localhost:5000/api/add-member/${numberOfMembers}`,
+      prod: "",
+    };
+
+    const url = baseURL.dev;
+
+    axios
+      .get(url, { withCredentials: true })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   return (
     <nav className="nav">
       <div className="nav__top">
@@ -30,7 +54,24 @@ export const Header = () => {
           <NotificationsIcon className="right-nav-link" />
           <FormatListBulletedIcon className="right-nav-link" />
           <MailOutlineIcon className="right-nav-link" />
-          <Avatar src="" alt="User Profile Image" className="right-nav-link" />
+          <Popup
+            trigger={
+              <Avatar
+                src={ProfileImage}
+                alt="User Profile Image"
+                className="right-nav-link"
+              />
+            }
+          >
+            <div className="user__menu">
+              <h4 className="user__menu-link" onClick={addMember}>
+                Add Monthy Member
+              </h4>
+              <h4 className="user__menu-link">Add Sales Income</h4>
+              <h4 className="user__menu-link">Add Gross Income</h4>
+              <h4 className="user__menu-link">Add Monthly Income</h4>
+            </div>
+          </Popup>
           <AppsIcon className="right-nav-link" />
         </div>
       </div>

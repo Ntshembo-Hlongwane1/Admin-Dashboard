@@ -10,7 +10,7 @@ export const TrafficChartProgress = (props: Props) => {
   return (
     <Line
       percent={props.percentage}
-      strokeWidth={1}
+      strokeWidth={2}
       strokeColor={props.barColor}
     />
   );

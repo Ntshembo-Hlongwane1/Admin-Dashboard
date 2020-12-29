@@ -2,8 +2,9 @@ const path = require("path");
 const HtmlPlugin = require("html-webpack-plugin");
 
 module.exports = {
+  entry: "./src/index.tsx",
   output: {
-    path: path.resolve(__dirname, "public/build"),
+    path: path.resolve(__dirname, "build"),
     filename: "bundle.[fullhash].js",
   },
 

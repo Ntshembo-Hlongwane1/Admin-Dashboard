@@ -4,8 +4,8 @@
   "description": "Backend to Admin Dashboard",
   "main": "dist/server.js",
   "scripts": {
-    "build": "tsc",
-    "start": "tsc & node .",
+    "build": "tsc .",
+    "start": "dist/server.js",
     "dev": "tsc -w & nodemon .",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
